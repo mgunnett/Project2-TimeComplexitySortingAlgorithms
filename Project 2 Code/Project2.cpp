@@ -162,8 +162,8 @@ int main() {
 
     sortingTime = binarySortingTime;
 
-    // picks a random value in the vector to search with
-    int x = binaryArr[rand() % binaryArr.size()];
+    // picks a value that is outside of the array (not availible to be found)
+    int x = binaryArr.back() + 1;
 
     // begins timer for binarySearch function
     auto start = high_resolution_clock::now();
@@ -210,8 +210,8 @@ int main() {
         //calls the linearArrFill function to fill the vector with random values
         linearArrFill(linearArr);
 
-        // sets x to a random value in the linearArr vector
-        int x = linearArr[rand() % linearArr.size()];
+        // sets x to a value not in the array
+        int x = linearArr.back() + 1;
 
         // begins timer for linearSearch function
         auto start = high_resolution_clock::now();
