@@ -95,7 +95,15 @@ int linearSearch(vector<int> &linearArr, int x) {
 }
 
 int main() {
+    using chrono::high_resolution_clock;
+    using std::chrono::duration_cast;
+    using std::chrono::duration;
+    using std::chrono::milliseconds;
     srand(time(0));
+
+    cout << "Binary Search:\n";
+    cout << "-----------------\n";
+    
     // Runs for all 5 iterations
     for (int i=1; i < 6; i++) {
     // determines a random number for the size of our binaryArr
@@ -108,12 +116,22 @@ int main() {
     sort(binaryArr.begin(), binaryArr.end());
     // picks a random value in the vector to search with
     int x = binaryArr[rand() % binaryArr.size()];
+    auto start = high_resolution_clock::now();
     // stores what index the x value was found at
     int indexValue = binarySearch(binaryArr, x);
-    
+    auto end = high_resolution_clock::now();
+    duration<double, milli> millisec = end - start;
+    auto binaryElapsedTime = millisec.count();
+
+    cout << "elapsed time for run #" << i << "- " << binaryElapsedTime << " milliseconds\n";
+
     // TESTING
     // cout << x << " found at " << indexValue << "\n";
+    // cout << "binary search took " << binaryElapsedTime << " milliseconds\n";
     }
+
+    cout << "\n\nLinear Search:\n";
+    cout << "----------------\n";
     for (int i=1; i < 6; i++) {
         // determines a random number for the size of our linearArr
         int linearArrSize = rand();
@@ -125,12 +143,22 @@ int main() {
         sort(linearArr.begin(), linearArr.end());
         // sets x to a random value in the linearArr vector
         int x = linearArr[rand() % linearArr.size()];
+        auto start = high_resolution_clock::now();
         // returns the index value of the specified x by calling the linearSearch function
         int indexValue = linearSearch(linearArr, x);
+        auto end = high_resolution_clock::now();
+        duration<double, milli> millisec = end - start;
+        auto linearElapsedTime = millisec.count();
+        
+        cout << "elapsed time for run #" << i << "- " << linearElapsedTime << " milliseconds\n";
+       
 
         // TESTING
-        cout << x << " found at " << indexValue << "\n";
+        // cout << x << " found at " << indexValue << "\n";
+        // cout << "linear search took " << linearElapsedTime.count() << " milliseconds\n";
     }
+    // cout << "average search time: ", replaceMe, "\n";
+    // cout << "number of comparisons made: ", replaceMe, "\n";
 
     // TO BE REMOVED AND REPLACED ONCE DONE
     // int replaceMe = 0;
