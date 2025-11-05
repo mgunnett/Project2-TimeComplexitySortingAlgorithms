@@ -101,13 +101,18 @@ int main() {
     using std::chrono::milliseconds;
     srand(time(0));
 
+    int inputSize;
+    cout << "What's the input size? - ";
+    cin >> inputSize;
+    cout << "\n";
+
     cout << "Binary Search:\n";
     cout << "-----------------\n";
-    
+
     // Runs for all 5 iterations
     for (int i=1; i < 6; i++) {
-    // determines a random number for the size of our binaryArr
-    int binaryArrSize = rand();
+    // sets binaryArrSize to whatever user chooses as input size
+    int binaryArrSize = inputSize;
     // declares the binaryArr
     vector<int> binaryArr(binaryArrSize);
     // calls the binaryArrFill function to fill the array with random values
@@ -133,8 +138,8 @@ int main() {
     cout << "\n\nLinear Search:\n";
     cout << "----------------\n";
     for (int i=1; i < 6; i++) {
-        // determines a random number for the size of our linearArr
-        int linearArrSize = rand();
+        // sets linearArrSize to whatever user chooses as input size
+        int linearArrSize = inputSize;
         // declares the linearArr
         vector<int> linearArr(linearArrSize);
         //calls the linearArrFill function to fill the vector with random values
