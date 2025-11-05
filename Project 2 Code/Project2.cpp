@@ -7,8 +7,8 @@
 
 using namespace std;
 
-int binarySearch(vector<int> &binaryArr, int x);
-int linearSearch(vector<int> &linearArr, int x);
+int binarySearch(vector<int> &binaryArr, int x, int &binaryComparisonCounter);
+int linearSearch(vector<int> &linearArr, int x, int &linearComparisonCounter);
 void binaryArrFill(vector<int> &binaryArr);
 void linearArrFill(vector<int> &linearArr);
 
@@ -37,6 +37,12 @@ void binaryArrFill(vector<int> &binaryArr) {
     // cout << "}" << endl;
 }
 
+/*
+    @name linearArrFill
+    @param vector<int> &linearArr
+    @details Uses minimum and maximum amounts to fill the linearArr with randomly
+             generated numbers.
+*/
 void linearArrFill(vector<int> &linearArr) {
     const int linearArrMin = linearArr.size()*-3;
     const int linearArrMax = linearArr.size()*3;
@@ -59,11 +65,13 @@ void linearArrFill(vector<int> &linearArr) {
     @details Uses a binary search algorithm to search for the indice that holds the randomly selected x
              in the main function. Compares whether x is at the middle, before the middle, or after the middle
 */
-int binarySearch(vector<int> &binaryArr, int x) {
+int binarySearch(vector<int> &binaryArr, int x, int &binaryComparisonCounter) {
     int low = 0;
     int high = binaryArr.size() - 1;
 
     while (low <= high) {
+        // increments comparison counter for each comparison
+        binaryComparisonCounter++;
         int middle = low + (high - low) / 2;
     
     // Check if x is at the middle
@@ -84,9 +92,19 @@ int binarySearch(vector<int> &binaryArr, int x) {
     return -1;
 }
 
-int linearSearch(vector<int> &linearArr, int x) {
+/*
+    @name linearSearch
+    @param vector<int> &linearArr, int x
+    @details Uses a linear search algorithm to search for the indice that holds the randomly selected x
+             in the main function. Searches through each indice to see if x is the same as the number in 
+             that indice position. If it is, it returns i, or the indice number. If it does not, it continues
+             until it finds the indice. If a matching value is not found, it returns -1.
+*/
+int linearSearch(vector<int> &linearArr, int x, int &linearComparisonCounter) {
     // Iterate through the vector to find the key
     for (int i=0; i < linearArr.size(); i++) {
+        // increments comparison counter up for each comparison
+        linearComparisonCounter++;
         if (linearArr[i] == x) {
             return i;
         }
@@ -105,6 +123,8 @@ int main() {
 
     double avg;
     int inputSize;
+    int binaryComparisonCounter = 0;
+    int linearComparisonCounter = 0;
 
     // Has the user input the size of the vector
     cout << "What's the input size? - ";
@@ -139,7 +159,7 @@ int main() {
     auto start = high_resolution_clock::now();
 
     // stores what index the x value was found at
-    int indexValue = binarySearch(binaryArr, x);
+    int indexValue = binarySearch(binaryArr, x, binaryComparisonCounter);
 
     // ends timer for binarySearch function
     auto end = high_resolution_clock::now();
@@ -164,7 +184,7 @@ int main() {
     cout << "\naverage search time: " << avg << " milliseconds\n";
 
     // cout << "sorting time: ", replaceMe, "\n";
-    // cout << "number of comparisons made: ", replaceMe, "\n";
+    cout << "number of comparisons made: " << binaryComparisonCounter << "\n";
 
     /*
     BEGINNING OF LINEAR SEARCH STATEMENTS
@@ -191,7 +211,7 @@ int main() {
         auto start = high_resolution_clock::now();
 
         // returns the index value of the specified x by calling the linearSearch function
-        int indexValue = linearSearch(linearArr, x);
+        int indexValue = linearSearch(linearArr, x, linearComparisonCounter);
 
         // ends the timer for linearSearch function
         auto end = high_resolution_clock::now();
@@ -213,7 +233,7 @@ int main() {
     }
     // Displays average search time for linearSearch
     cout << "\naverage search time: " << avg << " milliseconds\n";
-    // cout << "number of comparisons made: ", replaceMe, "\n";
+    cout << "number of comparisons made: " << linearComparisonCounter << "\n";
 
     // cout << "Linear Search:\n";
     // cout << "----------------\n";
