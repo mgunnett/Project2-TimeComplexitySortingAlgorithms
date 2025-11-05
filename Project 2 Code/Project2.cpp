@@ -37,9 +37,12 @@ void binaryArrFill(vector<int> &binaryArr) {
              generated numbers.
 */
 void linearArrFill(vector<int> &linearArr) {
+    /* Sets the minimum and maximum amounts for the values
+    that can be entered into the vector*/
     const int linearArrMin = linearArr.size()*-3;
     const int linearArrMax = linearArr.size()*3;
 
+    // creates random numbers to put into the vector & fills it
     for (int& num : linearArr) {
         num = linearArrMin + rand() % (linearArrMax - linearArrMin + 1);
     }
@@ -52,12 +55,15 @@ void linearArrFill(vector<int> &linearArr) {
              in the main function. Compares whether x is at the middle, before the middle, or after the middle
 */
 int binarySearch(vector<int> &binaryArr, int x, int &binaryComparisonCounter) {
+    // sets the lowest indice and the highest indice
     int low = 0;
     int high = binaryArr.size() - 1;
 
+    // runs as long as the lowest indice is less than or equal to the highest observed indice
     while (low <= high) {
         // increments comparison counter for each comparison
         binaryComparisonCounter++;
+        // calculates the indice in the middle of the lowest and highest
         int middle = low + (high - low) / 2;
     
     // Check if x is at the middle
@@ -75,6 +81,7 @@ int binarySearch(vector<int> &binaryArr, int x, int &binaryComparisonCounter) {
             high = middle - 1;
         }
     }
+    // if not found, returns -1
     return -1;
 }
 
@@ -91,10 +98,12 @@ int linearSearch(vector<int> &linearArr, int x, int &linearComparisonCounter) {
     for (int i=0; i < linearArr.size(); i++) {
         // increments comparison counter up for each comparison
         linearComparisonCounter++;
+        // if the value at the indice located at i is the same as the value of x, returns that indice
         if (linearArr[i] == x) {
             return i;
         }
     }
+    // if value/indice not found, returns -1
     return -1;
 }
 
@@ -180,9 +189,9 @@ int main() {
     binaryavg = binaryavg / 5;
     // displays the average search time in milliseconds
     cout << "\naverage search time: " << binaryavg << " milliseconds\n";
-
+    // displays sorting time in milliseconds
     cout << "sorting time: " << sortingTime << " milliseconds\n";
-
+    // displays number of comparisons made
     cout << "number of comparisons made: " << binaryComparisonCounter << "\n";
 
 
@@ -228,8 +237,10 @@ int main() {
     linearavg = linearavg / 5;
     // Displays average search time for linearSearch
     cout << "\naverage search time: " << linearavg << " milliseconds\n";
+        // displays number of comparisons made
     cout << "number of comparisons made: " << linearComparisonCounter << "\n";
 
+    // tells command prompt to stay open after running the program
     system("pause");
     return 0;
 }
