@@ -28,13 +28,6 @@ void binaryArrFill(vector<int> &binaryArr) {
     for (int& num : binaryArr) {
         num = binaryArrMin + rand() % (binaryArrMax - binaryArrMin + 1);
     }
-
-    // TESTING PURPOUSES
-    // cout << "Binary Array: { ";
-    // for (int num : binaryArr) {
-    //     cout << num << " ";
-    // }
-    // cout << "}" << endl;
 }
 
 /*
@@ -50,13 +43,6 @@ void linearArrFill(vector<int> &linearArr) {
     for (int& num : linearArr) {
         num = linearArrMin + rand() % (linearArrMax - linearArrMin + 1);
     }
-
-    // TESTING 
-    // cout << "Linear Array: { ";
-    // for (int num : linearArr) {
-    //     cout << num << " ";
-    // }
-    // cout << "}" << endl;
 }
 
 /*
@@ -116,15 +102,16 @@ int main() {
     // includes all of the chrono methods I need
     using chrono::high_resolution_clock;
     using std::chrono::duration_cast;
-    using std::chrono::duration;
-    using std::chrono::milliseconds;
+    using chrono::milliseconds;
     // Initiates random time
     srand(time(0));
 
-    double avg;
+    double binaryavg = 0.0;
+    double linearavg = 0.0;
     int inputSize;
     int binaryComparisonCounter = 0;
     int linearComparisonCounter = 0;
+    double sortingTime;
 
     // Has the user input the size of the vector
     cout << "What's the input size? - ";
@@ -149,8 +136,22 @@ int main() {
     // calls the binaryArrFill function to fill the array with random values
     binaryArrFill(binaryArr);
 
+    // begins timer for binary array sorting
+    auto startSort = high_resolution_clock::now();
+
     // pre-sorts the array in increasing order
     sort(binaryArr.begin(), binaryArr.end());
+
+    // ends the timer for binary array sorting
+    auto endSort = high_resolution_clock::now();
+
+    // calculates the duration (sortMillisec) by subtracting end time and start time
+    chrono::duration<double, milli> sortMillisec = endSort - startSort;
+
+    // converts the time result to something the console can display with cout
+    auto binarySortingTime = sortMillisec.count();
+
+    sortingTime = binarySortingTime;
 
     // picks a random value in the vector to search with
     int x = binaryArr[rand() % binaryArr.size()];
@@ -165,26 +166,25 @@ int main() {
     auto end = high_resolution_clock::now();
 
     // calculates the duration (millisec) by subtracting end time and start time
-    duration<double, milli> millisec = end - start;
+    chrono::duration<double, milli> binarymillisec = end - start;
 
     // converts the time result to something the console can display with cout
-    auto binaryElapsedTime = millisec.count();
+    auto binaryElapsedTime = binarymillisec.count();
 
     // displays the elapsed time for each run 1-5
     cout << "elapsed time for run #" << i << "- " << binaryElapsedTime << " milliseconds\n";
     
     // calculates the average search time in milliseconds
-    for (int j = 1; j <= i; j++) {
-        avg = avg + binaryElapsedTime;
+        binaryavg = binaryavg + binaryElapsedTime;
     }
-    avg = avg / 5;
-    }
-
+    binaryavg = binaryavg / 5;
     // displays the average search time in milliseconds
-    cout << "\naverage search time: " << avg << " milliseconds\n";
+    cout << "\naverage search time: " << binaryavg << " milliseconds\n";
 
-    // cout << "sorting time: ", replaceMe, "\n";
+    cout << "sorting time: " << sortingTime << " milliseconds\n";
+
     cout << "number of comparisons made: " << binaryComparisonCounter << "\n";
+
 
     /*
     BEGINNING OF LINEAR SEARCH STATEMENTS
@@ -201,9 +201,6 @@ int main() {
         //calls the linearArrFill function to fill the vector with random values
         linearArrFill(linearArr);
 
-        // pre-sorts the array in increasing order for the search funciton
-        sort(linearArr.begin(), linearArr.end());
-
         // sets x to a random value in the linearArr vector
         int x = linearArr[rand() % linearArr.size()];
 
@@ -217,32 +214,21 @@ int main() {
         auto end = high_resolution_clock::now();
 
         // determines the total elapsed run time for each run
-        duration<double, milli> millisec = end - start;
+        chrono::duration<double, milli> linearmillisec = end - start;
 
         // converts the run time into something the console can print with cout
-        auto linearElapsedTime = millisec.count();
+        auto linearElapsedTime = linearmillisec.count();
         
         // displays the elapsed run time for each run in linearSearch
         cout << "elapsed time for run #" << i << "- " << linearElapsedTime << " milliseconds\n";
        
         // calculates the average search time for linearSearch
-        for (int j = 1; j <= i; j++) {
-            avg = avg + linearElapsedTime;
-        }
-        avg = avg / 5;
+            linearavg = linearavg + linearElapsedTime;
     }
+    linearavg = linearavg / 5;
     // Displays average search time for linearSearch
-    cout << "\naverage search time: " << avg << " milliseconds\n";
+    cout << "\naverage search time: " << linearavg << " milliseconds\n";
     cout << "number of comparisons made: " << linearComparisonCounter << "\n";
-
-    // cout << "Linear Search:\n";
-    // cout << "----------------\n";
-    // cout << "number of comparisons made: ", replaceMe, "\n";
-    // cout << "\n\n\n\n";
-    // cout << "Binary Search:\n";
-    // cout << "-----------------\n";
-    // cout << "sorting time: ", replaceMe, "\n";
-    // cout << "number of comparisons made: ", replaceMe, "\n";
 
     system("pause");
     return 0;
