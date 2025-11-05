@@ -8,7 +8,7 @@
 using namespace std;
 
 int binarySearch(vector<int> &binaryArr, int x);
-int linearSearch();
+int linearSearch(vector<int> &linearArr, int x);
 void binaryArrFill(vector<int> &binaryArr);
 void linearArrFill(vector<int> &linearArr);
 
@@ -46,11 +46,11 @@ void linearArrFill(vector<int> &linearArr) {
     }
 
     // TESTING 
-    cout << "Linear Array: { ";
-    for (int num : linearArr) {
-        cout << num << " ";
-    }
-    cout << "}" << endl;
+    // cout << "Linear Array: { ";
+    // for (int num : linearArr) {
+    //     cout << num << " ";
+    // }
+    // cout << "}" << endl;
 }
 
 /*
@@ -84,6 +84,16 @@ int binarySearch(vector<int> &binaryArr, int x) {
     return -1;
 }
 
+int linearSearch(vector<int> &linearArr, int x) {
+    // Iterate through the vector to find the key
+    for (int i=0; i < linearArr.size(); i++) {
+        if (linearArr[i] == x) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int main() {
     srand(time(0));
     // Runs for all 5 iterations
@@ -105,9 +115,21 @@ int main() {
     // cout << x << " found at " << indexValue << "\n";
     }
     for (int i=1; i < 6; i++) {
+        // determines a random number for the size of our linearArr
         int linearArrSize = rand();
+        // declares the linearArr
         vector<int> linearArr(linearArrSize);
+        //calls the linearArrFill function to fill the vector with random values
         linearArrFill(linearArr);
+        // pre-sorts the array in increasing order for the search funciton
+        sort(linearArr.begin(), linearArr.end());
+        // sets x to a random value in the linearArr vector
+        int x = linearArr[rand() % linearArr.size()];
+        // returns the index value of the specified x by calling the linearSearch function
+        int indexValue = linearSearch(linearArr, x);
+
+        // TESTING
+        cout << x << " found at " << indexValue << "\n";
     }
 
     // TO BE REMOVED AND REPLACED ONCE DONE
